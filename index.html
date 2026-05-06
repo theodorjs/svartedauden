@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Svartedauden – Bjørgvin 1349</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --parch:      #f3e8c0;
+  --parch-mid:  #e8d5a0;
+  --parch-dark: #cdb27a;
+  --ink:        #1c0d07;
+  --ink-mid:    #3b1e0e;
+  --red:        #7a1515;
+  --gold:       #b8870b;
+  --gold-light: #e4b84a;
+  --seal-red:   #8B1A1A;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0e0704;
+  background-image:
+    radial-gradient(ellipse 120% 100% at 50% 0%, #1e0c06 0%, #080402 60%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 16px 72px;
+  font-family: 'EB Garamond', Georgia, serif;
+}
+
+/* ─── PROGRESS BAR ─── */
+#progress-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  transition: opacity 0.4s;
+}
+#progress-bar.hidden { opacity: 0; pointer-events: none; }
+.pdot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #2a1208;
+  border: 1.5px solid #5a3018;
+  transition: all 0.4s ease;
+}
+.pdot.done    { background: var(--gold);  border-color: var(--gold); }
+.pdot.current { background: var(--red);   border-color: var(--red); transform: scale(1.4); }
+.pdot-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  color: #7a5030;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 6px;
+}
+
+/* ─── SCREENS ─── */
+.screen { display: none; max-width: 740px; width: 100%; }
+.screen.active {
+  display: block;
+  animation: riseIn 0.7s ease both;
+}
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── TITLE SCREEN ─── */
+#title-screen {
+  max-width: 680px;
+  text-align: center;
+  color: var(--parch);
+  padding: 20px 8px 0;
+}
+.title-ornament {
+  font-size: 1.8rem;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+.main-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(30px, 5.5vw, 58px);
+  color: var(--gold-light);
+  text-shadow: 0 0 40px rgba(184,135,11,0.35), 0 2px 0 rgba(0,0,0,0.5);
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+.main-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(13px, 2.2vw, 18px);
+  color: #c8a870;
+  letter-spacing: 0.25em;
+  margin-bottom: 44px;
+}
+.intro-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(184,135,11,0.25);
+  border-radius: 4px;
+  padding: 26px 30px;
+  text-align: left;
+  margin-bottom: 36px;
+}
+.intro-box p {
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: #d8c4a4;
+  margin-bottom: 1em;
+}
+.intro-box p:last-child { margin-bottom: 0; }
+
+/* ─── SCROLL / ROD ─── */
+.rod {
+  width: 100%;
+  height: 30px;
+  background: linear-gradient(to bottom,
+    #b87830 0%, #d4a048 25%, #e8c060 50%, #d0983a 75%, #a86820 100%);
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,255,255,0.25);
+  position: relative;
+  z-index: 1;
+}
+.rod::before, .rod::after {
+  content: '';
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #f0c858, #c88820 55%, #7a5010 100%);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.55), inset 0 1px 2px rgba(255,255,255,0.2);
+}
+.rod::before { left: -10px; }
+.rod::after  { right: -10px; }
+
+/* ─── PARCHMENT ─── */
+.parchment {
+  background: var(--parch);
+  background-image:
+    repeating-linear-gradient(
+      0deg, transparent, transparent 30px,
+      rgba(0,0,0,0.025) 30px, rgba(0,0,0,0.025) 31px
+    ),
+    radial-gradient(ellipse 120% 100% at 50% 50%, rgba(200,160,80,0.12) 0%, transparent 70%);
+  border-left:  2.5px solid var(--parch-dark);
+  border-right: 2.5px solid var(--parch-dark);
+  padding: 46px 58px 52px;
+  position: relative;
+  box-shadow: inset 0 0 80px rgba(140,90,10,0.12);
+}
+.parchment::before {
+  content: '✦';
+  position: absolute; top: 16px; left: 22px;
+  font-size: 18px; color: var(--gold); opacity: 0.45;
+}
+.parchment::after {
+  content: '✦';
+  position: absolute; top: 16px; right: 22px;
+  font-size: 18px; color: var(--gold); opacity: 0.45;
+}
+
+/* ─── LETTER HEADER ─── */
+.letter-from {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  color: var(--red);
+  text-align: center;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.letter-date {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  color: var(--red);
+  text-align: center;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.letter-divider {
+  text-align: center;
+  color: var(--gold);
+  font-size: 1.1rem;
+  letter-spacing: 0.4em;
+  margin: 8px 0 26px;
+}
+
+/* ─── LETTER BODY ─── */
+.letter-text {
+  font-size: 1.13rem;
+  line-height: 1.92;
+  color: var(--ink);
+  text-align: justify;
+  hyphens: auto;
+}
+.letter-text p { margin-bottom: 1.1em; }
+.letter-text p:last-child { margin-bottom: 0; }
+
+/* DROP CAP / ANFANG */
+.anfang {
+  float: left;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 5.0em;
+  line-height: 0.72;
+  padding-right: 0.06em;
+  padding-top: 0.04em;
+  color: var(--red);
+  font-weight: 700;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+}
+
+/* FACT BOX */
+.fact-box {
+  background: rgba(0,0,0,0.055);
+  border-left: 3px solid var(--gold);
+  padding: 11px 16px;
+  margin: 18px 0;
+  font-size: 0.93rem;
+  font-style: italic;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+.fact-box strong {
+  font-style: normal;
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* LETTER SIGNATURE */
+.signature {
+  text-align: right;
+  font-style: italic;
+  color: var(--red);
+  margin-top: 20px;
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+/* ─── CHOICES ─── */
+.choices-header {
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  color: var(--red);
+  text-align: center;
+  margin-top: 32px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+.choices { display: flex; flex-direction: column; gap: 11px; }
+
+.choice-btn {
+  background: linear-gradient(160deg, #faf3de 0%, #eedd9e 100%);
+  border: 1.5px solid #c8a850;
+  border-radius: 3px;
+  padding: 13px 18px 13px 52px;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'EB Garamond', serif;
+  font-size: 1.06rem;
+  color: var(--ink);
+  line-height: 1.55;
+  position: relative;
+  transition: all 0.18s ease;
+  box-shadow: 1px 2px 5px rgba(0,0,0,0.12);
+}
+.choice-btn:hover {
+  background: linear-gradient(160deg, #f0e5c8 0%, #e0cc88 100%);
+  border-color: var(--gold);
+  transform: translateX(4px);
+  box-shadow: 2px 3px 10px rgba(0,0,0,0.18);
+}
+.choice-btn .cl {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  font-family: 'Cinzel', serif;
+  font-size: 1rem; font-weight: 600; color: var(--red);
+  width: 26px; height: 26px;
+  border: 1.8px solid var(--red); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  padding-top: 1px; flex-shrink: 0;
+}
+.choice-btn strong { font-weight: 600; color: var(--ink-mid); }
+
+.sole-btn {
+  display: block;
+  margin: 28px auto 0;
+  background: linear-gradient(to bottom, #7a1515, #510c0c);
+  border: 2px solid var(--gold);
+  border-radius: 5px;
+  padding: 14px 44px;
+  color: var(--parch);
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all 0.22s;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+}
+.sole-btn:hover {
+  background: linear-gradient(to bottom, #8B1A1A, #620e0e);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.55);
+}
+
+/* START BUTTON */
+.start-btn {
+  display: block; margin: 0 auto;
+  background: linear-gradient(to bottom, #8B1A1A, #550c0c);
+  border: 2px solid var(--gold-light);
+  border-radius: 5px;
+  padding: 15px 52px;
+  color: var(--parch);
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.22s;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.55);
+}
+.start-btn:hover {
+  background: linear-gradient(to bottom, #a02020, #660e0e);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(0,0,0,0.65);
+}
+
+/* ─── STATISTICS SCREEN ─── */
+.stats-header {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: var(--red);
+  text-align: center;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+.stats-sub {
+  font-size: 1rem;
+  color: var(--ink-mid);
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 30px;
+  line-height: 1.55;
+}
+.death-block {
+  text-align: center;
+  margin-bottom: 28px;
+  padding: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 3px;
+  background: rgba(0,0,0,0.04);
+}
+.death-num {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(40px, 7vw, 68px);
+  color: var(--red);
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.death-lbl {
+  font-size: 1rem;
+  color: var(--ink-mid);
+  font-style: italic;
+}
+
+/* Bar chart */
+.bar-section { margin: 20px 0 28px; }
+.bar-section h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-mid);
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.bar-row {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 13px;
+}
+.bar-lbl {
+  width: 128px; flex-shrink: 0;
+  font-size: 0.88rem; color: var(--ink-mid);
+  text-align: right; font-style: italic;
+  line-height: 1.3;
+}
+.bar-track {
+  flex: 1; height: 28px;
+  background: rgba(0,0,0,0.07);
+  border-radius: 3px; overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.bar-fill {
+  height: 100%; border-radius: 3px;
+  display: flex; align-items: center;
+  padding: 0 10px;
+  font-size: 0.82rem; color: rgba(255,255,255,0.92); font-weight: 600;
+  white-space: nowrap;
+  width: 0%;
+  transition: width 1.6s cubic-bezier(0.25,0.8,0.25,1);
+}
+.bar-yours    { background: linear-gradient(to right, #7a1515, #c03030); }
+.bar-hist     { background: linear-gradient(to right, #6a3e18, #a06028); }
+.bar-best     { background: linear-gradient(to right, #245018, #3a8028); }
+
+/* Choice review */
+.review-section {
+  border-top: 1px solid var(--gold);
+  padding-top: 24px; margin-top: 8px;
+}
+.review-section h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem; letter-spacing: 0.2em;
+  color: var(--ink-mid); text-align: center;
+  text-transform: uppercase; margin-bottom: 18px;
+}
+.review-item {
+  display: flex; gap: 12px;
+  align-items: flex-start;
+  padding: 11px 14px;
+  margin-bottom: 10px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 3px;
+  border-left: 3px solid var(--gold);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.review-item.good    { border-left-color: #3a7a20; }
+.review-item.bad     { border-left-color: #8B1A1A; }
+.review-item.neutral { border-left-color: #8B7020; }
+.review-item .icon   { font-size: 1.15rem; flex-shrink: 0; margin-top: 2px; }
+.review-item strong  { color: var(--red); }
+
+/* Historical note */
+.hist-note {
+  margin-top: 26px;
+  padding: 18px 22px;
+  background: rgba(0,0,0,0.05);
+  border: 1px solid var(--parch-dark);
+  border-radius: 3px;
+}
+.hist-note h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.88rem; letter-spacing: 0.15em;
+  color: var(--red); margin-bottom: 10px;
+}
+.hist-note p {
+  font-size: 0.94rem; line-height: 1.75;
+  color: var(--ink-mid);
+}
+.ornament-end {
+  text-align: center;
+  font-size: 2rem; margin-top: 24px;
+  color: var(--gold); opacity: 0.65;
+  letter-spacing: 0.3em;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 600px) {
+  .parchment { padding: 32px 22px 38px; }
+  .bar-lbl   { width: 82px; font-size: 0.8rem; }
+  .choice-btn { padding: 12px 12px 12px 44px; font-size: 0.97rem; }
+  .anfang { font-size: 4em; }
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS DOTS (always visible above scroll) -->
+<div id="progress-bar" class="hidden">
+  <span class="pdot-label">Brev</span>
+  <div class="pdot" id="pd1"></div>
+  <div class="pdot" id="pd2"></div>
+  <div class="pdot" id="pd3"></div>
+  <div class="pdot" id="pd4"></div>
+  <div class="pdot" id="pd5"></div>
+</div>
+
+<!-- ════════════════════════════════════
+     TITTELSKJERM
+════════════════════════════════════ -->
+<div id="title-screen" class="screen active">
+  <div class="title-ornament">— ✦ —</div>
+  <div class="main-title">Svartedauden</div>
+  <div class="main-subtitle">Bjørgvin · Anno Domini 1349</div>
+
+  <div class="intro-box">
+    <p>Det er sommer 1349. Dere er rådgivere for rådet i Bjørgvin – Norges største by. En fryktelig sykdom, kjent som <em>svartedauden</em> eller den store mannedauden, har utslettet halvparten av befolkningen i store deler av Europa. Nå nærmer den seg Norge.</p>
+    <p>Dere vil motta fire brev der situasjonen utspiller seg. Under hvert brev må dere ta et valg. De valgene dere tar vil avgjøre hvor mange av Bjørgvins 7 000 innbyggere som overlever – og til slutt vil dere se resultatet sammenlignet med hva som faktisk skjedde.</p>
+    <p>Velg klokt – men husk: menneskene i 1349 hadde aldri hørt om bakterier, og de hadde ingen kur å tilby de syke.</p>
+  </div>
+
+  <button class="start-btn" onclick="startGame()">Begynn</button>
+</div>
+
+<!-- ════════════════════════════════════
+     BREV 1 – INTRODUKSJON
+════════════════════════════════════ -->
+<div id="letter-1" class="screen">
+  <div class="rod"></div>
+  <div class="parchment">
+    <div class="letter-date">Bjørgvin, juni 1349</div>
+    <div class="letter-divider">— ✦ —</div>
+    <div class="letter-text">
+      <p><span class="anfang">D</span>et er høysommer i Bjørgvin. Solen henger i lange baner over Vågsbunnen og kastrene langs den travle bryggekanten. Varmen stiger opp fra de treplankebelagte kaikantene der tønner og baller av tørrfisk, korn og tøy stablet i høye rekker. Rop fra tyske hansahandlere blander seg med klapring av hestehovar, skrik fra måker og slag av bølger mot pålene.</p>
+      <p>Bjørgvin er Norges største og rikeste by, kanskje hjemsted for 7 000 sjeler – håndverkere, kjøpmenn, sjøfolk, munker og tjenere. Fra Munkeliv kloster nede ved Nordnes ringer det til tidebønn, og munkenes grå kutter glir stille forbi mellom ropende bryggearbeidere. I de trange gatene bak Bryggen flokkes folk foran bakerne og smedene.</p>
+      <p>Men fra sør er det kommet urolige rykter i månedene som har gått. En skremmende sykdom skal ha herjet London, Paris og halvøyene langs Middelhavet. Folk forteller om svarte hovne byller under armen og i lysken, om brennende feber og blod i spyttet. Hele familier dør på noen få dager. Legene er rådville. Ingen kur er funnet.</p>
+      <div class="fact-box">
+        <strong>Visste du?</strong> Svartedauden ble forårsaket av bakterien <em>Yersinia pestis</em>, som ble spredt via loppebit – oftest fra den svarte rotta (<em>Rattus rattus</em>). Rotter gikk om bord på handelsskip i havner langs Silkeveien og Middelhavet og ble fraktet til nye havnebyer. Når rottekolonien døde av pest, hoppet loppene over på mennesker i nærheten.
+      </div>
+      <p>I dag legger et handelsskip fra England til ved kaikanten. Det ser slitt og tungt ut. Noen av mannskapet er svært bleke. Kanskje de bare er reiseslitne etter den lange overfarten?</p>
+    </div>
+    <div class="choices-header">Hva gjør dere?</div>
+    <div class="choices">
+      <button class="sole-btn" onclick="choose(1,'A')">Ta imot handelsskipet</button>
+    </div>
+  </div>
+  <div class="rod"></div>
+</div>
+
+<!-- ════════════════════════════════════
+     BREV 2 – DE FØRSTE SYKE
+════════════════════════════════════ -->
+<div id="letter-2" class="screen">
+  <div class="rod"></div>
+  <div class="parchment">
+    <div class="letter-date">Bjørgvin, juli 1349</div>
+    <div class="letter-divider">— ✦ —</div>
+    <div class="letter-text">
+      <p><span class="anfang">D</span>agene etter at det engelske skipet la til kai, begynte det å skje merkelige ting. Rottene ble syke. De krabbet frem i fullt dagslys med hevede sider og falt om på åpen gate. Ingen hadde sett noe slikt før.</p>
+      <p>Snart begynte menneskene å bli syke. En bryggearbeider fikk kraftig feber og en hard, smertefull hevelse i lysken – en byll stor som et eple. Innen tre dager var han borte. Så kona hans. Så to av naboene. Nå er det meldt om nye syke i Øvrestredet, ved Munkeliv kloster og nede ved fisketorget. Noen dør av den hovne byllesykdommen. Andre kaster blod og er borte på én dag.</p>
+      <p>Legene i Bjørgvin er rådville. Noen sier det er «uren luft» fra sumpene. Andre mener det er en Guds straff for byens synder. De har ingen kur å tilby. Folk er redde. Noen familier har allerede flyktet ut av byen og inn i dalene.</p>
+      <div class="fact-box">
+        <strong>Fakta om sykdommen:</strong> Det fantes to former for pest. <em>Byllepest</em> drepte om lag 80 % av dem som ble smittet, og spredde seg via loppebitt: rotte → loppe → menneske. <em>Lungepest</em> smittet direkte mellom mennesker gjennom luftveiene og tok nesten alle den rammet. Middelalderens leger kjente ikke til bakterier og hadde ingen effektiv behandling.
+      </div>
+      <p>Rådet er sammenkalt. Hva gjør dere med de syke?</p>
+    </div>
+    <div class="choices-header">Velg ett alternativ</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose(2,'A')">
+        <span class="cl">A</span>
+        <strong>Isoler de syke.</strong> Vi stenger husene der noen er syke og forbyr besøk. De syke får mat satt utenfor døren. Folk oppfordres til å holde avstand til fremmede.
+      </button>
+      <button class="choice-btn" onclick="choose(2,'B')">
+        <span class="cl">B</span>
+        <strong>La hverdagen gå sin gang.</strong> Det er kristelig plikt å besøke de syke og trøste de sørgende. Vi arrangerer sykeleie, likvaker og begravelse slik vi alltid har gjort.
+      </button>
+      <button class="choice-btn" onclick="choose(2,'C')">
+        <span class="cl">C</span>
+        Vi gjør ingenting. Vi avventer og håper det går over av seg selv.
+      </button>
+    </div>
+  </div>
+  <div class="rod"></div>
+</div>
+
+<!-- ════════════════════════════════════
+     BREV 3 – ERKEDIAKONEN SKRIVER
+════════════════════════════════════ -->
+<div id="letter-3" class="screen">
+  <div class="rod"></div>
+  <div class="parchment">
+    <div class="letter-from">Fra erkediakonen i Bjørgvin stift</div>
+    <div class="letter-date">Bjørgvin, august 1349</div>
+    <div class="letter-divider">— ✦ —</div>
+    <div class="letter-text">
+      <p><span class="anfang">K</span>jære rådsherrer og medborgere. Vi geistlige i Bjørgvin er i et vanskelig dilemma, og vi ber om råd fra dere.</p>
+      <p>Det er vår plikt for Vår Herre å gi de døende den siste olje, å lese sjelemesser over de avdøde og å trøste familier som mister sine kjære. Vi kan ikke sende et menneske til Gudsdommen uten sakramentene. Og likevel er det slik at de av oss som reiser rundt til sykeleiene selv blir syke, én etter én.</p>
+      <p>Allerede er fire av byens tolv sogneprester borte. Tre munker fra Munkeliv er døde. To av klostrene har mistet sine priorater. Biskopen av Bjørgvin er selv syk og kan ikke lenger reise. Vi er redde, og vi vet ikke hva vi skal gjøre.</p>
+      <p>Legene sier at sykdommen kanskje spres med dårlig luft fra de syke. Andre sier den smitter ved berøring. Vi vet ikke hva vi skal tro. Men vi vet at de blant oss som besøker flest syke, er de som dør først.</p>
+      <div class="fact-box">
+        <strong>Historisk fakta:</strong> Prestene og munkene ble hardest rammet av alle grupper i samfunnet. I store deler av Europa mistet kirken 50–80 % av sin geistlighet under svartedauden. I Bjørgvin stift var nesten all kirkelig ledelse borte innen utgangen av 1350. Prestene spredte uforvarende smitten mellom alle husene de besøkte.
+      </div>
+      <p>Hva skal de geistlige gjøre?</p>
+      <div class="signature">
+        Erkediakonen Sigurd Jonsson<br>
+        <em>Skrevet med skjelvende hånd, august 1349</em>
+      </div>
+    </div>
+    <div class="choices-header">Velg ett alternativ</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose(3,'A')">
+        <span class="cl">A</span>
+        <strong>Geistlige begrenser kontakt.</strong> Prestene holder seg hjemme. De ringer klokkene for de døde og sender skriftlige bønner, men oppsøker ikke de syke personlig.
+      </button>
+      <button class="choice-btn" onclick="choose(3,'B')">
+        <span class="cl">B</span>
+        <strong>Geistlige fortsetter som normalt.</strong> Det er Guds vilje at vi tjener de syke og døende, uansett risiko. Prestene fortsetter å gi siste salving og holde messer ved sykeleiet.
+      </button>
+      <button class="choice-btn" onclick="choose(3,'C')">
+        <span class="cl">C</span>
+        Vi gjør ingenting. Vi overlater dette til Gud og lar den enkelte prest bestemme selv.
+      </button>
+    </div>
+  </div>
+  <div class="rod"></div>
+</div>
+
+<!-- ════════════════════════════════════
+     BREV 4 – HAVN OG KARANTENE
+════════════════════════════════════ -->
+<div id="letter-4" class="screen">
+  <div class="rod"></div>
+  <div class="parchment">
+    <div class="letter-date">Bjørgvin, august 1349</div>
+    <div class="letter-divider">— ✦ —</div>
+    <div class="letter-text">
+      <p><span class="anfang">S</span>mitten har nå bredt seg gjennom stadig flere av byens kvartaler. Hvert skip som ankommer fra sør bringer nye syke sjøfolk og nye rotter om bord. Markedet på torget trekker folk inn fra hele regionen – fra Voss, fra Hardanger, fra Sunnhordland. Mange av dem ser bleke ut når de reiser hjem.</p>
+      <p>En kjøpmann som er kommet fra Italia forteller om tiltak som diskuteres i noen havnebyer: skip nektes å legge til kai, og mannskap som har vært i smittede havner må vente i førti dager på åpent hav – <em>quarantina</em> kalles dette på italiensk, etter antallet dager. Ingen vet ennå om det virker, men ideen sprer seg.</p>
+      <p>Men Hansaenes tyske kjøpmenn på Bryggen er rasende. De vil ikke stenge handelen. Bjørgvin lever av sine skip – uten korn fra England og salt fra sør vil folk sulte. Og det er jo ikke sikkert at det er skipene som bringer sykdommen, sier de.</p>
+      <div class="fact-box">
+        <strong>Historisk fakta:</strong> Karantene viste seg å bli det mest effektive tiltaket mot pest i senmiddelalderen. I Norge ble ingen form for karantene innført i 1349, og smitten spredte seg fra Bjørgvin videre nordover til Trondheim og sørover til Stavanger i løpet av sommeren og høsten. Skip var den viktigste smitteveien mellom norske kystbyer.
+      </div>
+      <p>Hva gjør dere med skipstrafikken og markedet?</p>
+    </div>
+    <div class="choices-header">Velg ett alternativ</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose(4,'A')">
+        <span class="cl">A</span>
+        <strong>Innfør karantene.</strong> Ingen nye skip får legge til kai uten førti dagers venting på anker. Innreise til Bjørgvin fra smittede havner stenges. Handelen stanser midlertidig.
+      </button>
+      <button class="choice-btn" onclick="choose(4,'B')">
+        <span class="cl">B</span>
+        <strong>Hold handelen åpen.</strong> Bjørgvin lever av handelen. Vi kan ikke stenge havnen. Folk trenger korn og varer utenfra, og Hansaene truer med å flytte handelen til andre byer.
+      </button>
+      <button class="choice-btn" onclick="choose(4,'C')">
+        <span class="cl">C</span>
+        Vi gjør ingenting. Vi tar ingen avgjørelse og lar skipene komme og gå som før.
+      </button>
+    </div>
+  </div>
+  <div class="rod"></div>
+</div>
+
+<!-- ════════════════════════════════════
+     BREV 5 – HYGIENE OG ROTTER
+════════════════════════════════════ -->
+<div id="letter-5" class="screen">
+  <div class="rod"></div>
+  <div class="parchment">
+    <div class="letter-date">Bjørgvin, september 1349</div>
+    <div class="letter-divider">— ✦ —</div>
+    <div class="letter-text">
+      <p><span class="anfang">H</span>verdagen i Bjørgvin er blitt en annen. Klagene og jammeren fra de syke henger i luften mellom husene. Gatene, som for to måneder siden vrimlet av folk, er nesten tomme. Mange hus er stengte. Noen er forlatt.</p>
+      <p>I de tettbygde kvartalene bak Bryggen er forholdene uhygieniske. Avfall kastes i gatene. Kloakk renner rett ut mot sjøen. Rotter er overalt – i husene, i matlagrene, langs kaikanten. En gammel kone ved Nordnes påstår bestemt at det er rotter og lopper som sprer det onde, og at folk bør holde seg unna rotter og ikke arve klær og sengetøy etter de avdøde. Ingen tar henne helt alvorlig.</p>
+      <p>Byens lærde leger anbefaler å brenne velduftende urter og tre i gatene for å rense den «urene luften» som de mener forårsaker sykdommen. Noen mener folk bør dekke munn og nese med tøy når de er ute. En prest sier at bønn og faste er den eneste kuren.</p>
+      <div class="fact-box">
+        <strong>Historisk fakta:</strong> Middelalderens leger hadde rett til å dekke munn og nese – det beskytter mot dråpesmitte. Men mot byllepest, som smittet via loppebitt, hjalp det ikke. Det som faktisk angrep smittekjeden var å holde rotter unna og å ikke arve klær fra avdøde – der lopper kunne sitte. Ingen visste dette på den tiden.
+      </div>
+      <p>Hva gjør dere for å bedre forholdene i Bjørgvin?</p>
+    </div>
+    <div class="choices-header">Velg ett alternativ</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="choose(5,'A')">
+        <span class="cl">A</span>
+        <strong>Rydd opp og fordrev rotter.</strong> Vi organiserer opprydding av gater og søppel. Folk advares mot å arve klær og sengetøy fra avdøde. Brønner og matlagre beskyttes mot rotter.
+      </button>
+      <button class="choice-btn" onclick="choose(5,'B')">
+        <span class="cl">B</span>
+        <strong>Følg legenes råd om uren luft.</strong> Vi brenner velduftende urter og tre i gatene, og folk oppfordres til å bruke tøystykker for munn og nese når de er ute.
+      </button>
+      <button class="choice-btn" onclick="choose(5,'C')">
+        <span class="cl">C</span>
+        Vi gjør ingenting. Folk ordner seg selv best de kan.
+      </button>
+    </div>
+  </div>
+  <div class="rod"></div>
+</div>
+
+<!-- ════════════════════════════════════
+     STATISTIKKSKJERM
+════════════════════════════════════ -->
+<div id="stats-screen" class="screen">
+  <div class="rod"></div>
+  <div class="parchment">
+    <div class="letter-divider" style="margin-bottom: 4px;">— ✦ —</div>
+    <div class="stats-header">Bjørgvins skjebne – Anno Domini 1350</div>
+    <div class="letter-divider" style="margin-top: 8px;">— ✦ —</div>
+
+    <div class="stats-sub">
+      Svartedauden har herjet gjennom sommeren og høsten.<br>Her er resultatet av de valgene dere tok.
+    </div>
+
+    <div class="death-block">
+      <span class="death-num" id="death-num">–</span>
+      <span class="death-lbl" id="death-lbl">av 7 000 innbyggere omkom</span>
+    </div>
+
+    <div class="bar-section">
+      <h3>— Sammenligning —</h3>
+      <div class="bar-row">
+        <div class="bar-lbl">Deres Bjørgvin</div>
+        <div class="bar-track">
+          <div class="bar-fill bar-yours" id="bar-yours">–%</div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl">Historisk (faktisk)</div>
+        <div class="bar-track">
+          <div class="bar-fill bar-hist" id="bar-hist">~60%</div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl">Beste mulige utfall</div>
+        <div class="bar-track">
+          <div class="bar-fill bar-best" id="bar-best">~23%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-section">
+      <h3>— Vurdering av valgene dere tok —</h3>
+      <div id="review-items"></div>
+    </div>
+
+    <div class="hist-note">
+      <h3>Hva skjedde historisk i Bjørgvin og Norge?</h3>
+      <p>
+        I virkeligheten ble omtrent 60 % av Bjørgvins befolkning utslettet i løpet av 1349–1350 – anslagsvis rundt 4 200 av byens 7 000 innbyggere. Ingen karantene ble innført. Prestene fortsatte sine runder og ble særlig hardt rammet. Smitten spredte seg med skip videre til Nidaros (Trondheim), Oslo og Stavanger i løpet av sommeren og høsten 1349.
+        <br><br>
+        Det siste kjente norske offeret for svartedauden var biskopen i Stavanger, <em>Guttorm Pålsson</em>, som døde 7. januar 1350. Totalt anslår historikere at mellom 50 og 60 % av Norges befolkning omkom – anslagsvis 175 000–210 000 av landets ca. 350 000 mennesker.
+        <br><br>
+        Konsekvensene varte i generasjoner: hundrevis av gårdsbruk ble forlatt (<em>ødegårder</em>), kirken mistet mesteparten av sin geistlighet, og det tok 150–200 år før befolkningstallet i Norge kom tilbake til nivåene fra før svartedauden.
+      </p>
+    </div>
+
+    <div class="ornament-end">✦ &nbsp; ✦ &nbsp; ✦</div>
+  </div>
+  <div class="rod"></div>
+</div>
+
+<!-- ════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════ -->
+<script>
+const BASE_POP    = 7000;
+const BASE_DEATHS = 4200; // ~60% historical
+
+// Each choice's effect on deaths (positive = more deaths, negative = fewer)
+const modifiers = {
+  2: { A: -800, B: 600,  C: 200 },
+  3: { A: -500, B: 700,  C: 200 },
+  4: { A: -900, B: 500,  C: 300 },
+  5: { A: -400, B:   0,  C: 300 }
+};
+
+// Descriptive text for the final review
+const reviewData = {
+  2: {
+    A: {
+      label: 'Isolerte de syke',
+      type: 'good',
+      delta: -800,
+      text: 'Isolasjon hindret lopper i å hoppe fra syke til friske mennesker i nabolaget. Dette var det riktige tiltaket – selv om man ikke visste nøyaktig hvorfor det virket.'
+    },
+    B: {
+      label: 'Lot hverdagen gå sin gang',
+      type: 'bad',
+      delta: +600,
+      text: 'Besøk ved sykeleiet, likvaker der man holdt vakt over den døde hele natten, og arving av klær og sengetøy – alt dette spredte lopper til nye familier og forsterket smittebølgen kraftig.'
+    },
+    C: {
+      label: 'Gjorde ingenting',
+      type: 'neutral',
+      delta: +200,
+      text: 'Uten klare tiltak spredte smitten seg friere enn nødvendig. Folk fortsatte sin normale omgang og tok ikke hensyn til de syke husstandene.'
+    }
+  },
+  3: {
+    A: {
+      label: 'Geistlige begrenset kontakt',
+      type: 'good',
+      delta: -500,
+      text: 'Prestene besøkte mange syke hus daglig og spredte uforvarende lopper mellom husstandene. Å begrense rundene reddet liv – hos prestene selv og hos de familiene de ellers ville ha besøkt.'
+    },
+    B: {
+      label: 'Geistlige fortsatte som normalt',
+      type: 'bad',
+      delta: +700,
+      text: 'Historisk mistet kirken i Bjørgvin stift nesten hele sin geistlighet. Prestene var ufrivillig de største smittesprederne fordi de gikk fra hus til hus i hele byen. Et katastrofalt utfall for byen.'
+    },
+    C: {
+      label: 'Ingen beslutning om geistligheten',
+      type: 'neutral',
+      delta: +200,
+      text: 'Uten klare retningslinjer fortsatte de fleste prester sine runder av pliktfølelse. Smittespredningen fortsatte, selv om ikke alle var like aktive.'
+    }
+  },
+  4: {
+    A: {
+      label: 'Innførte karantene',
+      type: 'good',
+      delta: -900,
+      text: 'Karantene var det mest effektive tiltaket som var tilgjengelig i middelalderen. Det hindret nye smittebølger fra å komme inn med skip og stoppet spredningen til omliggende bygder og byer.'
+    },
+    B: {
+      label: 'Holdt handelen åpen',
+      type: 'bad',
+      delta: +500,
+      text: 'Skipstrafikken var den viktigste smitteveien for pesten langs norskekysten. Åpen havn betydde kontinuerlig tilstrøm av nye smittede rotter og syke sjøfolk fra byene i sør og fra England.'
+    },
+    C: {
+      label: 'Ingen beslutning om havnen',
+      type: 'neutral',
+      delta: +300,
+      text: 'Uten karantene fortsatte skip å ankomme fra smittede havner, og smitten ble stadig fornyet utenfra. Regionen rundt Bjørgvin ble gradvis rammet.'
+    }
+  },
+  5: {
+    A: {
+      label: 'Ryddet opp og fordrev rotter',
+      type: 'good',
+      delta: -400,
+      text: 'Å holde rotter unna mat og hus, og å advare mot å arve klær fra de døde, angrep selve smittekjeden – rotte → loppe → menneske – selv om ingen visste at det var lopper som spredte sykdommen.'
+    },
+    B: {
+      label: 'Fulgte råd om uren luft',
+      type: 'neutral',
+      delta: 0,
+      text: 'Å brenne urter hjalp ikke mot byllepest, som ikke ble spredt via luft. Tiltaket ga folk en falsk trygghetsfølelse, men hadde ingen effekt på dødstallet. Tøy for munn og nese hjalp derimot noe mot lungepest.'
+    },
+    C: {
+      label: 'Ingen hygienetiltak',
+      type: 'neutral',
+      delta: +300,
+      text: 'Uten tiltak fortsatte rotter og lopper å spre smitten fritt gjennom byens hus, lagre og gater. Kombinert med høy befolkningstetthet gav dette pesten optimale vilkår.'
+    }
+  }
+};
+
+const playerChoices = {};
+let currentLetter  = 0;
+
+function updateProgress(n) {
+  const bar = document.getElementById('progress-bar');
+  if (n < 1) { bar.classList.add('hidden'); return; }
+  bar.classList.remove('hidden');
+  for (let i = 1; i <= 5; i++) {
+    const dot = document.getElementById('pd' + i);
+    dot.className = 'pdot';
+    if (i < n)  dot.classList.add('done');
+    if (i === n) dot.classList.add('current');
+  }
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function startGame() {
+  updateProgress(1);
+  showScreen('letter-1');
+}
+
+function choose(letterNum, option) {
+  playerChoices[letterNum] = option;
+  if (letterNum < 5) {
+    updateProgress(letterNum + 1);
+    showScreen('letter-' + (letterNum + 1));
+  } else {
+    updateProgress(0);
+    showStats();
+  }
+}
+
+function showStats() {
+  // Calculate total deaths
+  let deaths = BASE_DEATHS;
+  for (let i = 2; i <= 5; i++) {
+    const ch = playerChoices[i];
+    if (ch && modifiers[i][ch] !== undefined) {
+      deaths += modifiers[i][ch];
+    }
+  }
+  deaths = Math.max(600, Math.min(6800, deaths));
+  const pct = Math.round((deaths / BASE_POP) * 100);
+  const survivors = BASE_POP - deaths;
+
+  // Update heading numbers
+  document.getElementById('death-num').textContent = deaths.toLocaleString('no-NO');
+  document.getElementById('death-lbl').textContent =
+    deaths + ' av 7 000 innbyggere omkom (' + pct + '%) · ' + survivors + ' overlevde';
+
+  showScreen('stats-screen');
+
+  // Animate bars after paint
+  setTimeout(() => {
+    const yourBar  = document.getElementById('bar-yours');
+    const histBar  = document.getElementById('bar-hist');
+    const bestBar  = document.getElementById('bar-best');
+
+    yourBar.style.width = pct + '%';
+    yourBar.textContent = pct + '%';
+    histBar.style.width = '60%';
+    histBar.textContent = '~60%';
+    bestBar.style.width = '23%';
+    bestBar.textContent = '~23%';
+  }, 200);
+
+  // Build review items
+  const container = document.getElementById('review-items');
+  container.innerHTML = '';
+
+  const icons = { good: '✅', bad: '❌', neutral: '⚠️' };
+  const roundLabels = {
+    2: 'Valg 1 – De syke',
+    3: 'Valg 2 – Geistligheten',
+    4: 'Valg 3 – Havnen',
+    5: 'Valg 4 – Hygiene'
+  };
+
+  for (let i = 2; i <= 5; i++) {
+    const ch = playerChoices[i];
+    if (!ch) continue;
+    const d = reviewData[i][ch];
+    const sign  = d.delta > 0 ? '+' : '';
+    const delta = d.delta === 0
+      ? '(ingen effekt på dødstallet)'
+      : '(' + sign + d.delta + ' døde)';
+
+    const item = document.createElement('div');
+    item.className = 'review-item ' + d.type;
+    item.innerHTML =
+      '<div class="icon">' + icons[d.type] + '</div>' +
+      '<div><strong>' + roundLabels[i] + ': ' + d.label + '</strong> ' + delta + '<br>' + d.text + '</div>';
+    container.appendChild(item);
+  }
+}
+</script>
+
+</body>
+</html>
