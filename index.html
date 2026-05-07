@@ -110,7 +110,7 @@ body {
   margin-bottom: 36px;
 }
 .intro-box p {
-  font-size: 1.1rem;
+  font-size: 1.17rem;
   line-height: 1.85;
   color: #d8c4a4;
   margin-bottom: 1em;
@@ -195,7 +195,7 @@ body {
 
 /* ─── LETTER BODY ─── */
 .letter-text {
-  font-size: 1.13rem;
+  font-size: 1.2rem;
   line-height: 1.92;
   color: var(--ink);
   text-align: justify;
@@ -223,10 +223,10 @@ body {
   border-left: 3px solid var(--gold);
   padding: 11px 16px;
   margin: 18px 0;
-  font-size: 0.93rem;
+  font-size: 1.08rem;
   font-style: italic;
   color: var(--ink-mid);
-  line-height: 1.65;
+  line-height: 1.72;
 }
 .fact-box strong {
   font-style: normal;
@@ -240,7 +240,7 @@ body {
   font-style: italic;
   color: var(--red);
   margin-top: 20px;
-  font-size: 0.98rem;
+  font-size: 1.03rem;
   line-height: 1.6;
 }
 
@@ -265,7 +265,7 @@ body {
   cursor: pointer;
   text-align: left;
   font-family: 'EB Garamond', serif;
-  font-size: 1.06rem;
+  font-size: 1.11rem;
   color: var(--ink);
   line-height: 1.55;
   position: relative;
@@ -342,7 +342,7 @@ body {
   margin-bottom: 6px;
 }
 .stats-sub {
-  font-size: 1rem;
+  font-size: 1.06rem;
   color: var(--ink-mid);
   text-align: center;
   font-style: italic;
@@ -366,7 +366,7 @@ body {
   margin-bottom: 4px;
 }
 .death-lbl {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--ink-mid);
   font-style: italic;
 }
@@ -407,6 +407,9 @@ body {
   transition: width 1.6s cubic-bezier(0.25,0.8,0.25,1);
 }
 .bar-yours    { background: linear-gradient(to right, #7a1515, #c03030); }
+.bar-high     { background: linear-gradient(to right, #7a1515, #c03030); }
+.bar-mid      { background: linear-gradient(to right, #6a3e18, #a06028); }
+.bar-low      { background: linear-gradient(to right, #245018, #3a8028); }
 .bar-hist     { background: linear-gradient(to right, #6a3e18, #a06028); }
 .bar-best     { background: linear-gradient(to right, #245018, #3a8028); }
 
@@ -429,7 +432,7 @@ body {
   background: rgba(0,0,0,0.04);
   border-radius: 3px;
   border-left: 3px solid var(--gold);
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.6;
   color: var(--ink);
 }
@@ -453,8 +456,37 @@ body {
   color: var(--red); margin-bottom: 10px;
 }
 .hist-note p {
-  font-size: 0.94rem; line-height: 1.75;
+  font-size: 1rem; line-height: 1.75;
   color: var(--ink-mid);
+}
+.restart-btn {
+  margin-top: 26px;
+}
+.sources {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--parch-dark);
+  color: var(--ink-mid);
+}
+.sources h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  color: var(--red);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.sources ol {
+  padding-left: 22px;
+}
+.sources li {
+  font-size: 0.96rem;
+  line-height: 1.55;
+  margin-bottom: 5px;
+}
+.sources a {
+  color: var(--ink-mid);
+  text-decoration-color: rgba(122,21,21,0.45);
 }
 .ornament-end {
   text-align: center;
@@ -467,7 +499,7 @@ body {
 @media (max-width: 600px) {
   .parchment { padding: 32px 22px 38px; }
   .bar-lbl   { width: 82px; font-size: 0.8rem; }
-  .choice-btn { padding: 12px 12px 12px 44px; font-size: 0.97rem; }
+  .choice-btn { padding: 12px 12px 12px 44px; font-size: 1.02rem; }
   .anfang { font-size: 4em; }
 }
 </style>
@@ -493,9 +525,10 @@ body {
   <div class="main-subtitle">Bjørgvin · Anno Domini 1349</div>
 
   <div class="intro-box">
-    <p>Det er sommer 1349. Dere er rådgivere for rådet i Bjørgvin – Norges største by. En fryktelig sykdom, kjent som <em>svartedauden</em> eller den store mannedauden, har utslettet halvparten av befolkningen i store deler av Europa. Nå nærmer den seg Norge.</p>
-    <p>Dere vil motta fire brev der situasjonen utspiller seg. Under hvert brev må dere ta et valg. De valgene dere tar vil avgjøre hvor mange av Bjørgvins 7 000 innbyggere som overlever – og til slutt vil dere se resultatet sammenlignet med hva som faktisk skjedde.</p>
-    <p>Velg klokt – men husk: menneskene i 1349 hadde aldri hørt om bakterier, og de hadde ingen kur å tilby de syke.</p>
+    <p>Året er 1349 og det er sommer. Du er rådgiver for byrådet i Norges største by, Bjørgvin.</p>
+    <p>En fryktelig sykdom, kjent som <em>svartedauden</em> eller den store mannedauden, har utslettet halvparten av befolkningen i store deler av Europa. Nå nærmer den seg Norge.</p>
+    <p>Dere vil motta fire brev som beskriver hvordan situasjonen utspiller seg. Etter hvert brev må dere ta et valg. Valgene dere tar vil avgjøre hvor mange av Bjørgvins 7 000 innbyggere som overlever – og til slutt vil dere se resultatet sammenlignet med hva som faktisk skjedde.</p>
+    <p><strong>Velg klokt, og husk:</strong> menneskene i 1349 hadde aldri hørt om bakterier, og de hadde ingen kur å tilby de syke.</p>
   </div>
 
   <button class="start-btn" onclick="startGame()">Begynn</button>
@@ -510,15 +543,14 @@ body {
     <div class="letter-date">Bjørgvin, juni 1349</div>
     <div class="letter-divider">— ✦ —</div>
     <div class="letter-text">
-      <p><span class="anfang">D</span>et er høysommer i Bjørgvin. Solen henger i lange baner over Vågsbunnen og kastrene langs den travle bryggekanten. Varmen stiger opp fra de treplankebelagte kaikantene der tønner og baller av tørrfisk, korn og tøy stablet i høye rekker. Rop fra tyske hansahandlere blander seg med klapring av hestehovar, skrik fra måker og slag av bølger mot pålene.</p>
+      <p><span class="anfang">D</span>et er høysommer i Bjørgvin. Sola står høyt på himmelen over Vågsbunnen og de trange bryggehusene langs den travle bryggekanten. Varmen stiger opp fra treplankene på kaikantene, der tønner og baller av tørrfisk, korn og tøy er stablet i høye rekker. Rop fra Hanseatene (tyske hansahandlere) blander seg med klapring av hestehover, skrik fra måker og slag av bølger mot pålene.</p>
       <p>Bjørgvin er Norges største og rikeste by, kanskje hjemsted for 7 000 sjeler – håndverkere, kjøpmenn, sjøfolk, munker og tjenere. Fra Munkeliv kloster nede ved Nordnes ringer det til tidebønn, og munkenes grå kutter glir stille forbi mellom ropende bryggearbeidere. I de trange gatene bak Bryggen flokkes folk foran bakerne og smedene.</p>
-      <p>Men fra sør er det kommet urolige rykter i månedene som har gått. En skremmende sykdom skal ha herjet London, Paris og halvøyene langs Middelhavet. Folk forteller om svarte hovne byller under armen og i lysken, om brennende feber og blod i spyttet. Hele familier dør på noen få dager. Legene er rådville. Ingen kur er funnet.</p>
+      <p>Men fra sør er det kommet urovekkende rykter i månedene som har gått. En skremmende sykdom skal ha herjet London, Paris og halvøyene langs Middelhavet. Folk forteller om svarte hovne byller under armen og i lysken, om brennende feber og blod i spyttet. Hele familier dør på noen få dager. Legene er rådville. Ingen kur er funnet.</p>
       <div class="fact-box">
         <strong>Visste du?</strong> Svartedauden ble forårsaket av bakterien <em>Yersinia pestis</em>, som ble spredt via loppebit – oftest fra den svarte rotta (<em>Rattus rattus</em>). Rotter gikk om bord på handelsskip i havner langs Silkeveien og Middelhavet og ble fraktet til nye havnebyer. Når rottekolonien døde av pest, hoppet loppene over på mennesker i nærheten.
       </div>
       <p>I dag legger et handelsskip fra England til ved kaikanten. Det ser slitt og tungt ut. Noen av mannskapet er svært bleke. Kanskje de bare er reiseslitne etter den lange overfarten?</p>
     </div>
-    <div class="choices-header">Hva gjør dere?</div>
     <div class="choices">
       <button class="sole-btn" onclick="choose(1,'A')">Ta imot handelsskipet</button>
     </div>
@@ -535,16 +567,16 @@ body {
     <div class="letter-date">Bjørgvin, juli 1349</div>
     <div class="letter-divider">— ✦ —</div>
     <div class="letter-text">
-      <p><span class="anfang">D</span>agene etter at det engelske skipet la til kai, begynte det å skje merkelige ting. Rottene ble syke. De krabbet frem i fullt dagslys med hevede sider og falt om på åpen gate. Ingen hadde sett noe slikt før.</p>
-      <p>Snart begynte menneskene å bli syke. En bryggearbeider fikk kraftig feber og en hard, smertefull hevelse i lysken – en byll stor som et eple. Innen tre dager var han borte. Så kona hans. Så to av naboene. Nå er det meldt om nye syke i Øvrestredet, ved Munkeliv kloster og nede ved fisketorget. Noen dør av den hovne byllesykdommen. Andre kaster blod og er borte på én dag.</p>
-      <p>Legene i Bjørgvin er rådville. Noen sier det er «uren luft» fra sumpene. Andre mener det er en Guds straff for byens synder. De har ingen kur å tilby. Folk er redde. Noen familier har allerede flyktet ut av byen og inn i dalene.</p>
+      <p><span class="anfang">D</span>agene etter at det engelske skipet la til kai, begynte det å skje merkelige ting. Rotter, som vanligvis holdt seg skjult, begynte å dukke opp i dagslys. Noen virret rundt, pjuskete i pelsen, før de ble liggende urørlige i søla mellom husene. Ingen hadde sett noe slikt før.</p>
+      <p>Snart begynte menneskene å bli syke. En bryggearbeider fikk kraftig feber og en hard, smertefull hevelse i lysken – en byll så stor som et eple. Innen tre dager var han borte. Deretter forsvant kona hans. Og så to av naboene. Nå er det meldt om nye syke i Øvrestredet, ved Munkeliv kloster og nede ved fisketorget. Noen dør av den hovne byllesykdommen. Andre kaster opp blod og mister livet på bare én dag.</p>
+      <p>Legene i Bjørgvin er rådville. Noen sier at sykdommen kommer av «uren luft» fra sumpene. Andre mener det er Guds straff for byens synder. Ingen av dem har en kur å tilby. Ingen vet hva som kan stanse sykdommen. Folk er redde. Noen familier har allerede flyktet ut av byen og inn i dalene.</p>
       <div class="fact-box">
-        <strong>Fakta om sykdommen:</strong> Det fantes to former for pest. <em>Byllepest</em> drepte om lag 80 % av dem som ble smittet, og spredde seg via loppebitt: rotte → loppe → menneske. <em>Lungepest</em> smittet direkte mellom mennesker gjennom luftveiene og tok nesten alle den rammet. Middelalderens leger kjente ikke til bakterier og hadde ingen effektiv behandling.
+        <strong>Fakta om sykdommen:</strong> Det fantes to former for pest. Den ene var byllepest. Den drepte ca. 80 % av dem som ble smittet, og spredte seg via loppebitt. Den andre var lungepest. Den smittet direkte mellom mennesker gjennom luftveiene og tok livet av nesten alle den rammet. Middelalderens leger visste ikke om bakterier, og de hadde ingen effektiv behandling.
       </div>
       <p>Rådet er sammenkalt. Hva gjør dere med de syke?</p>
     </div>
     <div class="choices-header">Velg ett alternativ</div>
-    <div class="choices">
+    <div class="choices" data-randomize="true">
       <button class="choice-btn" onclick="choose(2,'A')">
         <span class="cl">A</span>
         <strong>Isoler de syke.</strong> Vi stenger husene der noen er syke og forbyr besøk. De syke får mat satt utenfor døren. Folk oppfordres til å holde avstand til fremmede.
@@ -555,7 +587,7 @@ body {
       </button>
       <button class="choice-btn" onclick="choose(2,'C')">
         <span class="cl">C</span>
-        Vi gjør ingenting. Vi avventer og håper det går over av seg selv.
+        <strong>Vi gjør ingenting.</strong> Vi avventer og håper det går over av seg selv.
       </button>
     </div>
   </div>
@@ -573,8 +605,8 @@ body {
     <div class="letter-divider">— ✦ —</div>
     <div class="letter-text">
       <p><span class="anfang">K</span>jære rådsherrer og medborgere. Vi geistlige i Bjørgvin er i et vanskelig dilemma, og vi ber om råd fra dere.</p>
-      <p>Det er vår plikt for Vår Herre å gi de døende den siste olje, å lese sjelemesser over de avdøde og å trøste familier som mister sine kjære. Vi kan ikke sende et menneske til Gudsdommen uten sakramentene. Og likevel er det slik at de av oss som reiser rundt til sykeleiene selv blir syke, én etter én.</p>
-      <p>Allerede er fire av byens tolv sogneprester borte. Tre munker fra Munkeliv er døde. To av klostrene har mistet sine priorater. Biskopen av Bjørgvin er selv syk og kan ikke lenger reise. Vi er redde, og vi vet ikke hva vi skal gjøre.</p>
+      <p>Det er vår plikt for Vår Herre å gi de døende den siste olje, å lese sjelemesser over de avdøde og å trøste familier som mister sine kjære. Vi kan ikke sende et menneske til Gudsdommen uten sakramentene. Likevel er det slik at de av oss som reiser rundt til sykeleiene selv blir syke, én etter én.</p>
+      <p>Allerede er fire av byens tolv sogneprester borte. Tre munker fra Munkeliv er døde. To av klostrene har mistet sine priorer. Biskopen av Bjørgvin er selv syk og kan ikke lenger reise. Vi er redde, og vi vet ikke hva vi skal gjøre.</p>
       <p>Legene sier at sykdommen kanskje spres med dårlig luft fra de syke. Andre sier den smitter ved berøring. Vi vet ikke hva vi skal tro. Men vi vet at de blant oss som besøker flest syke, er de som dør først.</p>
       <div class="fact-box">
         <strong>Historisk fakta:</strong> Prestene og munkene ble hardest rammet av alle grupper i samfunnet. I store deler av Europa mistet kirken 50–80 % av sin geistlighet under svartedauden. I Bjørgvin stift var nesten all kirkelig ledelse borte innen utgangen av 1350. Prestene spredte uforvarende smitten mellom alle husene de besøkte.
@@ -586,7 +618,7 @@ body {
       </div>
     </div>
     <div class="choices-header">Velg ett alternativ</div>
-    <div class="choices">
+    <div class="choices" data-randomize="true">
       <button class="choice-btn" onclick="choose(3,'A')">
         <span class="cl">A</span>
         <strong>Geistlige begrenser kontakt.</strong> Prestene holder seg hjemme. De ringer klokkene for de døde og sender skriftlige bønner, men oppsøker ikke de syke personlig.
@@ -597,7 +629,7 @@ body {
       </button>
       <button class="choice-btn" onclick="choose(3,'C')">
         <span class="cl">C</span>
-        Vi gjør ingenting. Vi overlater dette til Gud og lar den enkelte prest bestemme selv.
+        <strong>Vi gjør ingenting.</strong> Vi overlater dette til Gud og lar den enkelte prest bestemme selv.
       </button>
     </div>
   </div>
@@ -613,16 +645,16 @@ body {
     <div class="letter-date">Bjørgvin, august 1349</div>
     <div class="letter-divider">— ✦ —</div>
     <div class="letter-text">
-      <p><span class="anfang">S</span>mitten har nå bredt seg gjennom stadig flere av byens kvartaler. Hvert skip som ankommer fra sør bringer nye syke sjøfolk og nye rotter om bord. Markedet på torget trekker folk inn fra hele regionen – fra Voss, fra Hardanger, fra Sunnhordland. Mange av dem ser bleke ut når de reiser hjem.</p>
-      <p>En kjøpmann som er kommet fra Italia forteller om tiltak som diskuteres i noen havnebyer: skip nektes å legge til kai, og mannskap som har vært i smittede havner må vente i førti dager på åpent hav – <em>quarantina</em> kalles dette på italiensk, etter antallet dager. Ingen vet ennå om det virker, men ideen sprer seg.</p>
+      <p><span class="anfang">S</span>mitten har nå bredt seg gjennom stadig flere av byens kvartaler. Hvert skip som ankommer fra sør, bringer nye syke sjøfolk og nye rotter om bord. Markedet på torget trekker folk inn fra hele regionen – fra Voss, fra Hardanger, fra Sunnhordland. Mange av dem ser bleke ut når de reiser hjem.</p>
+      <p>En kjøpmann som er kommet fra Italia, forteller om tiltak som diskuteres i noen havnebyer: Skip nektes å legge til kai, og mannskap som har vært i smittede havner, må vente i førti dager på åpent hav – <em>quarantina</em> kalles dette på italiensk, etter antallet dager. Ingen vet ennå om det virker, men ideen sprer seg.</p>
       <p>Men Hansaenes tyske kjøpmenn på Bryggen er rasende. De vil ikke stenge handelen. Bjørgvin lever av sine skip – uten korn fra England og salt fra sør vil folk sulte. Og det er jo ikke sikkert at det er skipene som bringer sykdommen, sier de.</p>
       <div class="fact-box">
-        <strong>Historisk fakta:</strong> Karantene viste seg å bli det mest effektive tiltaket mot pest i senmiddelalderen. I Norge ble ingen form for karantene innført i 1349, og smitten spredte seg fra Bjørgvin videre nordover til Trondheim og sørover til Stavanger i løpet av sommeren og høsten. Skip var den viktigste smitteveien mellom norske kystbyer.
+        <strong>Historisk fakta:</strong> Karantene viste seg å bli et av de mest effektive tiltakene mot pest i senmiddelalderen. I Norge ble ingen form for karantene innført i 1349, og smitten spredte seg fra Bjørgvin videre nordover til Trondheim og sørover til Stavanger i løpet av sommeren og høsten. Skip var den viktigste smitteveien mellom norske kystbyer.
       </div>
       <p>Hva gjør dere med skipstrafikken og markedet?</p>
     </div>
     <div class="choices-header">Velg ett alternativ</div>
-    <div class="choices">
+    <div class="choices" data-randomize="true">
       <button class="choice-btn" onclick="choose(4,'A')">
         <span class="cl">A</span>
         <strong>Innfør karantene.</strong> Ingen nye skip får legge til kai uten førti dagers venting på anker. Innreise til Bjørgvin fra smittede havner stenges. Handelen stanser midlertidig.
@@ -633,7 +665,7 @@ body {
       </button>
       <button class="choice-btn" onclick="choose(4,'C')">
         <span class="cl">C</span>
-        Vi gjør ingenting. Vi tar ingen avgjørelse og lar skipene komme og gå som før.
+        <strong>Vi gjør ingenting.</strong> Vi tar ingen avgjørelse og lar skipene komme og gå som før.
       </button>
     </div>
   </div>
@@ -650,18 +682,18 @@ body {
     <div class="letter-divider">— ✦ —</div>
     <div class="letter-text">
       <p><span class="anfang">H</span>verdagen i Bjørgvin er blitt en annen. Klagene og jammeren fra de syke henger i luften mellom husene. Gatene, som for to måneder siden vrimlet av folk, er nesten tomme. Mange hus er stengte. Noen er forlatt.</p>
-      <p>I de tettbygde kvartalene bak Bryggen er forholdene uhygieniske. Avfall kastes i gatene. Kloakk renner rett ut mot sjøen. Rotter er overalt – i husene, i matlagrene, langs kaikanten. En gammel kone ved Nordnes påstår bestemt at det er rotter og lopper som sprer det onde, og at folk bør holde seg unna rotter og ikke arve klær og sengetøy etter de avdøde. Ingen tar henne helt alvorlig.</p>
-      <p>Byens lærde leger anbefaler å brenne velduftende urter og tre i gatene for å rense den «urene luften» som de mener forårsaker sykdommen. Noen mener folk bør dekke munn og nese med tøy når de er ute. En prest sier at bønn og faste er den eneste kuren.</p>
+      <p>I de tettbygde kvartalene bak Bryggen er forholdene uhygieniske. Avfall kastes i gatene. Kloakk renner rett ut i sjøen. Rotter er overalt – i husene, i matlagrene, langs kaikanten. En gammel kone ved Nordnes påstår bestemt at det er rotter og lopper som sprer det onde, og at folk bør holde seg unna rotter og ikke arve klær og sengetøy etter de avdøde. Ingen tar henne helt alvorlig.</p>
+      <p>Byens lærde leger anbefaler å brenne velduftende urter og tre i gatene for å rense den «urene luften» som de mener forårsaker sykdommen. Noen mener at folk bør dekke munn og nese med tøy når de er ute. En prest sier at bønn og faste er den eneste kuren.</p>
       <div class="fact-box">
-        <strong>Historisk fakta:</strong> Middelalderens leger hadde rett til å dekke munn og nese – det beskytter mot dråpesmitte. Men mot byllepest, som smittet via loppebitt, hjalp det ikke. Det som faktisk angrep smittekjeden var å holde rotter unna og å ikke arve klær fra avdøde – der lopper kunne sitte. Ingen visste dette på den tiden.
+        <strong>Historisk fakta:</strong> Middelalderens leger hadde rett i at det kunne hjelpe å dekke munn og nese – det beskytter mot dråpesmitte. Men mot byllepest, som smittet via loppebitt, hjalp det ikke. Det som faktisk angrep smittekjeden, var å holde rotter unna og å ikke arve klær fra avdøde – der lopper kunne sitte. Ingen visste dette på den tiden.
       </div>
       <p>Hva gjør dere for å bedre forholdene i Bjørgvin?</p>
     </div>
     <div class="choices-header">Velg ett alternativ</div>
-    <div class="choices">
+    <div class="choices" data-randomize="true">
       <button class="choice-btn" onclick="choose(5,'A')">
         <span class="cl">A</span>
-        <strong>Rydd opp og fordrev rotter.</strong> Vi organiserer opprydding av gater og søppel. Folk advares mot å arve klær og sengetøy fra avdøde. Brønner og matlagre beskyttes mot rotter.
+        <strong>Rydd opp og fordriv rotter.</strong> Vi organiserer opprydding av gater og søppel. Folk advares mot å arve klær og sengetøy fra avdøde. Brønner og matlagre beskyttes mot rotter.
       </button>
       <button class="choice-btn" onclick="choose(5,'B')">
         <span class="cl">B</span>
@@ -669,7 +701,7 @@ body {
       </button>
       <button class="choice-btn" onclick="choose(5,'C')">
         <span class="cl">C</span>
-        Vi gjør ingenting. Folk ordner seg selv best de kan.
+        <strong>Vi gjør ingenting.</strong> Folk gjør så godt de kan.
       </button>
     </div>
   </div>
@@ -733,7 +765,19 @@ body {
       </p>
     </div>
 
+    <button class="start-btn restart-btn" onclick="restartGame()">Start på nytt</button>
+
     <div class="ornament-end">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+    <div class="sources">
+      <h3>Kilder</h3>
+      <ol>
+        <li><a href="https://snl.no/svartedauden" target="_blank" rel="noopener">Store norske leksikon: Svartedauden</a></li>
+        <li><a href="https://no.wikipedia.org/wiki/Svartedauden" target="_blank" rel="noopener">Wikipedia: Svartedauden</a></li>
+        <li><a href="https://ndla.no/nn/r/historie-pb/svartedauden-i-noreg/772396d244" target="_blank" rel="noopener">NDLA: Svartedauden i Noreg</a></li>
+        <li><a href="https://snl.no/Norge_i_senmiddelalderen" target="_blank" rel="noopener">Store norske leksikon: Norge i senmiddelalderen</a></li>
+      </ol>
+    </div>
   </div>
   <div class="rod"></div>
 </div>
@@ -839,6 +883,7 @@ const reviewData = {
 
 const playerChoices = {};
 let currentLetter  = 0;
+const choiceLabels = ['A', 'B', 'C'];
 
 function updateProgress(n) {
   const bar = document.getElementById('progress-bar');
@@ -861,16 +906,66 @@ function showScreen(id) {
   }
 }
 
+function shuffleChoices(letterNum) {
+  const container = document.querySelector('#letter-' + letterNum + ' .choices[data-randomize="true"]');
+  if (!container) return;
+
+  const buttons = Array.from(container.querySelectorAll('.choice-btn'));
+  for (let i = buttons.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [buttons[i], buttons[j]] = [buttons[j], buttons[i]];
+  }
+
+  buttons.forEach((button, index) => {
+    container.appendChild(button);
+    const label = button.querySelector('.cl');
+    if (label) label.textContent = choiceLabels[index];
+  });
+}
+
+function showLetter(letterNum) {
+  currentLetter = letterNum;
+  shuffleChoices(letterNum);
+  updateProgress(letterNum);
+  showScreen('letter-' + letterNum);
+}
+
+function resetGameState() {
+  Object.keys(playerChoices).forEach(key => delete playerChoices[key]);
+  currentLetter = 0;
+  document.getElementById('review-items').innerHTML = '';
+  document.getElementById('death-num').textContent = '–';
+  document.getElementById('death-lbl').textContent = 'av 7 000 innbyggere omkom';
+  document.getElementById('bar-yours').className = 'bar-fill bar-yours';
+  document.getElementById('bar-yours').style.width = '0%';
+  document.getElementById('bar-yours').textContent = '–%';
+  document.getElementById('bar-hist').style.width = '0%';
+  document.getElementById('bar-hist').textContent = '~60%';
+  document.getElementById('bar-best').style.width = '0%';
+  document.getElementById('bar-best').textContent = '~23%';
+}
+
 function startGame() {
-  updateProgress(1);
-  showScreen('letter-1');
+  resetGameState();
+  showLetter(1);
+}
+
+function restartGame() {
+  resetGameState();
+  updateProgress(0);
+  showScreen('title-screen');
+}
+
+function getMortalityBarClass(pct) {
+  if (pct <= 35) return 'bar-low';
+  if (pct <= 60) return 'bar-mid';
+  return 'bar-high';
 }
 
 function choose(letterNum, option) {
   playerChoices[letterNum] = option;
   if (letterNum < 5) {
-    updateProgress(letterNum + 1);
-    showScreen('letter-' + (letterNum + 1));
+    showLetter(letterNum + 1);
   } else {
     updateProgress(0);
     showStats();
@@ -903,6 +998,7 @@ function showStats() {
     const histBar  = document.getElementById('bar-hist');
     const bestBar  = document.getElementById('bar-best');
 
+    yourBar.className = 'bar-fill ' + getMortalityBarClass(pct);
     yourBar.style.width = pct + '%';
     yourBar.textContent = pct + '%';
     histBar.style.width = '60%';
